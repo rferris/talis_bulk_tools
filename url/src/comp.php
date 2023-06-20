@@ -4,7 +4,7 @@ print("</br><a href='url.html'>Back to url tool</a>");
 
 // ini_set('display_errors', 1);
 // ini_set('display_startup_errors', 1);
-ini_set('max_execution_time', '600');
+ini_set('max_execution_time', '0');
 // error_reporting(E_ALL);
 
 echo "<p>Starting...</p>";
@@ -186,6 +186,14 @@ while (($line = fgetcsv($file_handle, 1000, ",")) !== FALSE) {
 	}
     if($row <= 10 || $row % 10 == 0 ){
 	   echo_message_to_screen(INFO, "Processed $row rows");
+	}
+
+	// rferris added a rate-limiting sleep
+	$pause_length = 10;
+	$pause_every = 250;
+	if($row % $pause_every == 0) {
+		echo_message_to_screen(INFO, "Pausing for $pause_length seconds to avoid being blocked.");
+		sleep(pause_length);
 	}
 }
 
