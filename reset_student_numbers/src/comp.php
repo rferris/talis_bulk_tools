@@ -7,7 +7,7 @@
 
 print("</br><a href='reset_numbers.html'>Back to reset student numbers tool</a>");
 
-ini_set('max_execution_time', '600');
+ini_set('max_execution_time', '0');
 
 echo "<p>Starting...</p>";
 
@@ -141,6 +141,14 @@ while (!feof($file_handle)) {
 	// if this is the first row, detect and remove BOMs from UTF8 files.
 	if ($row === 1) {
 		trim($file_handle[0], "\\xef\\xbb\\xbf");
+	}
+
+	// rferris added a rate-limiting sleep
+	$pause_length = 10;
+	$pause_every = 250;
+	if($row % $pause_every == 0) {
+		echo_message_to_screen(INFO, "Pausing for $pause_length seconds to avoid being blocked.");
+		sleep($pause_length);
 	}
 
 	// Check for blank lines and output useful message (instead of API error response)
