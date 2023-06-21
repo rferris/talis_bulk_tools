@@ -193,7 +193,7 @@ while (($line = fgetcsv($file_handle, 1000, ",")) !== FALSE) {
 	$pause_every = 250;
 	if($row % $pause_every == 0) {
 		echo_message_to_screen(INFO, "Pausing for $pause_length seconds to avoid being blocked.");
-		sleep(pause_length);
+		sleep($pause_length);
 	}
 }
 
